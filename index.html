@@ -2,364 +2,225 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Profile & Shopping Cart</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <style>
-        * {
-            box-sizing: border-box
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warung Ice Cream - Es Krim Segar Setiap Hari</title>
 
-        body {
-            margin: 0;
-            padding: 25px;
-            font-family: Arial;
-            background: #f8fbff;
-            color: #173d6b
-        }
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-        .container {
-            max-width: 1100px;
-            margin: auto
-        }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        .top {
-            border-top: 5px dashed #d8e5f6;
-            margin-bottom: 25px
-        }
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
-        .card {
-            background: white;
-            border: 1px solid #bfd5f2;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px
-        }
-
-        .profile {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px
-        }
-
-        .head {
-            display: flex;
-            align-items: center;
-            gap: 18px
-        }
-
-        .avatar {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: #2e5da8;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 38px
-        }
-
-        h1,
-        h2 {
-            margin: 0 0 10px
-        }
-
-        p {
-            margin: 7px 0
-        }
-
-        .info {
-            margin: 20px 0;
-            font-size: 17px
-        }
-
-        button {
-            border: 0;
-            background: #244b86;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer
-        }
-
-        button:hover {
-            background: #1d4074
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 11px;
-            margin: 6px 0 12px;
-            border: 1px solid #aec7e7;
-            border-radius: 10px
-        }
-
-        textarea {
-            height: 80px;
-            resize: none
-        }
-
-        .error {
-            display: none;
-            color: #d62828;
-            font-size: 12px
-        }
-
-        .valid {
-            border-color: #2e8b57 !important
-        }
-
-        .invalid {
-            border-color: #d62828 !important
-        }
-
-        .products {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px
-        }
-
-        .product {
-            border: 1px solid #d5e2f2;
-            border-radius: 15px;
-            padding: 15px
-        }
-
-        .product b {
-            display: block;
-            margin-bottom: 10px
-        }
-
-        .cart {
-            margin-top: 20px
-        }
-
-        .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0
-        }
-
-        .total {
-            text-align: right;
-            font-size: 18px;
-            margin: 15px 0
-        }
-
-        .discount {
-            color: #16803c
-        }
-
-        .hidden {
-            display: none
-        }
-
-        .success {
-            background: #dcfce7;
-            color: #166534;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 10px
-        }
-
-        @media(max-width:700px) {
-
-            .profile,
-            .products {
-                grid-template-columns: 1fr
-            }
-
-            body {
-                padding: 15px
-            }
-        }
-    </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="container">
-        <div class="top"></div>
 
-        <div class="card">
-            <h2>👤 Profile Interaktif</h2>
-            <div class="profile">
-                <div>
-                    <div class="head">
-                        <div id="avatar" class="avatar">FP</div>
-                        <div>
-                            <h1 id="name">Ferdi Pratama</h1>
-                            <p id="job">Data Analyst & Web Developer</p>
-                        </div>
-                    </div>
-                    <div class="info">
-                        📍 <span id="location">Pontianak, Indonesia</span><br><br>
-                        ✉ <span id="emailProfile">ferdi@gmail.com</span>
-                    </div>
-                    <button id="ubah">⟳ Ubah Profil</button>
-                </div>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
 
-                <form id="contact">
-                    <h2>💬 Tinggalkan Pesan</h2>
-                    <input id="nama" placeholder="Nama Anda">
-                    <span id="eNama" class="error">Nama minimal 3 karakter</span>
-                    <input id="email" type="email" placeholder="Email Anda">
-                    <span id="eEmail" class="error">Email tidak valid</span>
-                    <textarea id="pesan" placeholder="Tulis pesan..."></textarea>
-                    <span id="ePesan" class="error">Pesan minimal 10 karakter</span>
-                    <button type="submit">Kirim</button>
-                    <div id="ok" class="success hidden">✓ Pesan berhasil dikirim!</div>
-                </form>
-            </div>
-        </div>
+      <div class="logo">
+        <i class="fas fa-ice-cream"></i>
+        <span>Warung Ice Cream</span>
+      </div>
 
-        <div class="card">
-            <h2>🛒 Shopping Cart</h2>
-            <div class="products">
-                <div class="product"><b>Laptop</b>Rp80.000
-                    <button class="add" data-name="Laptop" data-price="80000">Tambah</button>
-                </div>
-                <div class="product"><b>Keyboard</b>Rp150.000
-                    <button class="add" data-name="Keyboard" data-price="150000">Tambah</button>
-                </div>
-                <div class="product"><b>Mouse</b>Rp75.000
-                    <button class="add" data-name="Mouse" data-price="75000">Tambah</button>
-                </div>
-            </div>
+      <div class="nav-menu" id="navMenu">
+        <a class="nav-link active" data-filter="all">Semua</a>
+        <a class="nav-link" data-filter="es-krim">Es Krim</a>
+        <a class="nav-link" data-filter="sundae">Sundae</a>
+        <a class="nav-link" data-filter="minuman">Minuman</a>
+      </div>
 
-            <div id="cart" class="cart"></div>
-            <div id="summary"></div>
-            <button id="checkout" class="hidden">Checkout</button>
+      <div class="cart-btn" id="cartBtn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-text">Keranjang</span>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </div>
 
-            <div id="buyer" class="card hidden">
-                <h2>Data Pembeli</h2>
-                <input id="buyerName" placeholder="Nama lengkap">
-                <span id="bName" class="error">Nama wajib diisi</span>
-                <input id="address" placeholder="Alamat">
-                <span id="bAddress" class="error">Alamat wajib diisi</span>
-                <input id="phone" placeholder="Nomor HP">
-                <span id="bPhone" class="error">Nomor HP tidak valid</span>
-                <button id="pay">Konfirmasi Checkout</button>
-            </div>
-            <div id="history"></div>
-        </div>
+      <div class="hamburger" id="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+
+      <h1>
+        Selamat Datang di
+        <span>Warung Ice Cream</span> 🍦
+      </h1>
+
+      <p>
+        Pilih es krim favoritmu, tambahkan ke keranjang,
+        dan nikmati kesegarannya!
+      </p>
+
+      <div class="search-box">
+        <input type="text" id="searchProduk" placeholder="Cari es krim favoritmu...">
+        <i class="fas fa-search"></i>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRODUK -->
+  <section class="produk-section">
+
+    <div class="section-header">
+
+      <h2>
+        <i class="fas fa-list"></i>
+        Menu Kami
+      </h2>
+
+      <div class="filter-btns">
+        <button class="filter-btn active" data-cat="all">
+          Semua
+        </button>
+
+        <button class="filter-btn" data-cat="es-krim">
+          Es Krim
+        </button>
+
+        <button class="filter-btn" data-cat="sundae">
+          Sundae
+        </button>
+
+        <button class="filter-btn" data-cat="minuman">
+          Minuman
+        </button>
+      </div>
+
     </div>
 
-    <script>
-        $(function () {
-            let cart = {};
+    <div class="produk-grid" id="produkGrid"></div>
 
-            function rupiah(n) { return 'Rp' + n.toLocaleString('id-ID') }
+  </section>
 
-            function updateCart() {
-                let total = 0, qty = 0, html = '';
-                $.each(cart, function (name, p) {
-                    let sub = p.price * p.qty; total += sub; qty += p.qty;
-                    html += '<div class="row"><span>' + name + ' x ' + p.qty +
-                        '</span><span>' + rupiah(sub) + ' <button class="minus" data-name="' + name + '">−</button></span></div>';
-                });
-                $('#cart').html(html || '<p>Keranjang masih kosong.</p>');
-                let diskon = total > 100000 ? total * .1 : 0, akhir = total - diskon;
-                $('#summary').html(total ? '<div class="total">Total: ' + rupiah(total) + '<br>' +
-                    (diskon ? '<span class="discount">Diskon 10%: -' + rupiah(diskon) + '</span><br>' : '') +
-                    '<b>Total Bayar: ' + rupiah(akhir) + '</b></div>' : '');
-                $('#checkout').toggleClass('hidden', !total);
-                return { total: akhir, qty: qty };
-            }
+  <!-- CART OVERLAY -->
+  <div class="cart-overlay" id="cartOverlay"></div>
 
-            /* Shopping Cart */
-            $('.add').click(function () {
-                let n = $(this).data('name'), p = Number($(this).data('price'));
-                cart[n] = cart[n] || { price: p, qty: 0 }; cart[n].qty++; updateCart();
-            });
+  <!-- CART SIDEBAR -->
+  <aside class="cart-sidebar" id="cartSidebar">
 
-            $(document).on('click', '.minus', function () {
-                let n = $(this).data('name'); cart[n].qty--;
-                if (cart[n].qty <= 0) delete cart[n]; updateCart();
-            });
+    <div class="cart-header">
 
-            /* Ubah Profil */
-            $('#ubah').click(function () {
-                let a = !$(this).data('ubah'); $(this).data('ubah', a);
-                $('#avatar').text(a ? 'AP' : 'FP');
-                $('#name').text(a ? 'Andi Pratama' : 'Ferdi Pratama')
-                    .css('color', a ? '#2e5da8' : '#092f63');
-                $('#job').text(a ? 'Front-End Developer' : 'Data Analyst & Web Developer');
-                $('#location').text(a ? 'Jakarta, Indonesia' : 'Pontianak, Indonesia');
-                $('#emailProfile').text(a ? 'andi@example.com' : 'ferdi@gmail.com');
-                $(this).html(a ? '✓ Profil Diubah' : '⟳ Ubah Profil');
-            });
+      <h3>
+        <i class="fas fa-shopping-bag"></i>
+        Keranjang Belanja
+      </h3>
 
-            /* Hover Avatar */
-            $('#avatar').hover(
-                function () { $(this).stop().animate({ width: 100, height: 100 }, 150) },
-                function () { $(this).stop().animate({ width: 90, height: 90 }, 150) }
-            );
+      <button class="cart-close" id="cartClose">
+        <i class="fas fa-times"></i>
+      </button>
 
-            /* Fungsi Validasi */
-            function val(id, err, ok) {
-                let v = $(id).val().trim(), hasil = ok(v);
-                $(id).toggleClass('invalid', !hasil).toggleClass('valid', hasil);
-                $(err).toggle(!hasil); return hasil;
-            }
+    </div>
 
-            /* Validasi Form Pesan */
-            $('#contact input,#contact textarea').on('input', function () {
-                if (this.id === 'nama') val('#nama', '#eNama', v => v.length >= 3);
-                if (this.id === 'email') val('#email', '#eEmail',
-                    v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
-                if (this.id === 'pesan') val('#pesan', '#ePesan', v => v.length >= 10);
-            });
+    <div class="cart-items" id="cartItems"></div>
 
-            $('#contact').submit(function (e) {
-                e.preventDefault();
-                let a = val('#nama', '#eNama', v => v.length >= 3),
-                    b = val('#email', '#eEmail', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)),
-                    c = val('#pesan', '#ePesan', v => v.length >= 10);
-                if (a && b && c) $('#ok').fadeIn().delay(1200).fadeOut();
-            });
+    <div class="cart-footer">
 
-            /* Checkout */
-            $('#checkout').click(() => $('#buyer').slideToggle());
+      <div class="cart-total">
+        <span>Total:</span>
+        <span class="total-price" id="cartTotal">
+          Rp 0
+        </span>
+      </div>
 
-            $('#pay').click(function () {
-                let a = val('#buyerName', '#bName', v => v.length > 0),
-                    b = val('#address', '#bAddress', v => v.length > 0),
-                    c = val('#phone', '#bPhone', v => /^08\d{8,13}$/.test(v));
-                if (!a || !b || !c) return;
+      <button class="btn-checkout" id="btnCheckout">
+        <i class="fas fa-check-circle"></i>
+        Checkout Sekarang
+      </button>
 
-                let s = updateCart();
-                let r = JSON.parse(localStorage.getItem('riwayat') || '[]');
-                r.push({
-                    nama: $('#buyerName').val(),
-                    total: s.total, qty: s.qty,
-                    tanggal: new Date().toLocaleString('id-ID')
-                });
-                localStorage.setItem('riwayat', JSON.stringify(r));
+    </div>
 
-                alert('Checkout berhasil!');
-                cart = {}; $('#buyer').slideUp(); updateCart(); showHistory();
-            });
+  </aside>
 
-            /* Riwayat Checkout */
-            function showHistory() {
-                let r = JSON.parse(localStorage.getItem('riwayat') || '[]');
-                $('#history').html(r.length ?
-                    '<h3>Riwayat Checkout</h3>' +
-                    r.slice(-5).reverse().map(x =>
-                        '<div class="row"><span>' + x.nama + ' (' + x.qty + ' item)</span>' +
-                        '<span>' + rupiah(x.total) + '</span></div>').join('') : '');
-            }
+  <!-- MODAL DATA PEMBELI -->
+  <div class="checkout-modal" id="checkoutModal">
 
-            showHistory();
-            updateCart();
-        });
-    </script>
+    <div class="checkout-box">
+
+      <button class="modal-close" id="modalClose">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <h2>
+        <i class="fas fa-user"></i>
+        Data Pembeli
+      </h2>
+
+      <p>
+        Isi data pembeli sebelum menyelesaikan checkout.
+      </p>
+
+      <form id="buyerForm">
+
+        <label for="buyerName">Nama</label>
+        <input type="text" id="buyerName" placeholder="Masukkan nama lengkap">
+
+        <span class="form-error" id="buyerNameError">
+          Nama wajib diisi.
+        </span>
+
+        <label for="buyerAddress">Alamat</label>
+        <textarea id="buyerAddress" placeholder="Masukkan alamat lengkap"></textarea>
+
+        <span class="form-error" id="buyerAddressError">
+          Alamat wajib diisi.
+        </span>
+
+        <label for="buyerPhone">No. HP</label>
+        <input type="text" id="buyerPhone" placeholder="08xxxxxxxxxx">
+
+        <span class="form-error" id="buyerPhoneError">
+          No. HP harus 10-13 digit dan diawali 08.
+        </span>
+
+        <button type="submit" class="btn-confirm">
+          <i class="fas fa-check-circle"></i>
+          Konfirmasi Checkout
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+
+    <i class="fas fa-check-circle"></i>
+
+    <span id="toastMsg">
+      Produk ditambahkan!
+    </span>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+
+    <p>
+      <strong>Warung Ice Cream</strong> © 2026
+    </p>
+
+    <p>
+      Praktikum Pemrograman Web Dasar ·
+      Prodi Sistem Informasi
+    </p>
+
+  </footer>
+
+  <script src="script.js"></script>
+
 </body>
-
 </html>
