@@ -1,282 +1,123 @@
-
 $(function () {
-    // Menghormati preferensi pengguna untuk mengurangi gerakan.
-    jQuery.fx.off = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-    ).matches;
+    // Mengikuti pengaturan reduced motion dari pengguna.
+    jQuery.fx.off = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // 1. MENU NAVIGASI RESPONSIF: slideDown / slideUp
+    // 1. Event click dan efek slide untuk menu.
     $('#navToggle').on('click', function () {
-        $('#navLinks').stop(true, true).slideToggle(220);
+        $('#navLinks').stop(true, true).slideToggle(200);
     });
 
-    // 2. TAB INFORMASI: click + fadeIn / fadeOut
+    // 2. Tab informasi: mengganti panel berdasarkan data-target.
     $('.tab').on('click', function () {
         const target = $(this).data('target');
-
-        $('.tab')
-            .removeClass('active')
-            .attr('aria-selected', 'false');
-
-        $(this)
-            .addClass('active')
-            .attr('aria-selected', 'true');
-
-        $('.tab-pane:visible').stop(true, true).fadeOut(140, function () {
-            $(target).stop(true, true).fadeIn(220);
+        $('.tab').removeClass('active').attr('aria-selected', 'false');
+        $(this).addClass('active').attr('aria-selected', 'true');
+        $('.tab-pane').stop(true, true).fadeOut(100, function () {
+            $('.tab-pane').prop('hidden', true);
+            $(target).prop('hidden', false).hide().fadeIn(180);
         });
     });
 
-    // 3. KARTU FITUR: animate saat pointer masuk/keluar
-    $('.feature-card')
-        .on('mouseenter', function () {
-            $(this).stop().animate({ top: '-6px' }, 160);
-        })
-        .on('mouseleave', function () {
-            $(this).stop().animate({ top: '0px' }, 160);
-        });
+    // 3. Animasi kartu fitur menggunakan animate().
+    $('.feature-card').on('mouseenter', function () {
+        $(this).stop().animate({ top: '-5px' }, 120);
+    }).on('mouseleave', function () {
+        $(this).stop().animate({ top: '0px' }, 120);
+    });
 
-    // 4. FAQ: slideDown / slideUp
+    // 4. FAQ dengan slideUp dan slideDown.
     $('.faq-question').on('click', function () {
         const $answer = $(this).next('.faq-answer');
-        const isOpen = $answer.is(':visible');
-
-        $('.faq-answer').not($answer).stop(true, true).slideUp(200);
+        const open = $answer.is(':visible');
+        $('.faq-answer').not($answer).stop(true, true).slideUp(180);
         $('.faq-question').not(this).find('span').text('＋');
-
-        if (isOpen) {
-            $answer.stop(true, true).slideUp(200);
-            $(this).find('span').text('＋');
-        } else {
-            $answer.stop(true, true).slideDown(240);
-            $(this).find('span').text('−');
-        }
+        $answer.stop(true, true)[open ? 'slideUp' : 'slideDown'](200);
+        $(this).find('span').text(open ? '＋' : '−');
     });
 
-    // 5. SMOOTH SCROLL untuk link internal
+    // 5. Smooth scroll untuk tautan internal.
     $('a[href^="#"]').on('click', function (e) {
-        const href = $(this).attr('href');
-
-        if (!href || href.length < 2) {
-            return;
-        }
-
-        const $target = $(href);
-
-        if (!$target.length) {
-            return;
-        }
-
+        const id = $(this).attr('href');
+        const $target = $(id);
+        if (id.length < 2 || !$target.length) return;
         e.preventDefault();
-
-        $('html, body').stop(true).animate({
-            scrollTop: $target.offset().top - 72
-        }, 550);
-
-        // Tutup menu mobile setelah link dipilih.
-        if (window.matchMedia('(max-width: 720px)').matches) {
-            $('#navLinks').stop(true, true).slideUp(180);
+        $('html, body').stop().animate({ scrollTop: $target.offset().top - 68 }, 400);
+        if (window.matchMedia('(max-width: 760px)').matches) {
+            $('#navLinks').stop(true, true).slideUp(150);
         }
     });
 
-    // Fungsi notifikasi
+    // Pesan notifikasi sederhana.
     function showToast(message, error = false) {
-        $('#toast')
-            .stop(true, true)
-            .toggleClass('error-toast', error)
-            .text(message)
-            .fadeIn(200)
-            .delay(2800)
-            .fadeOut(300);
+        $('#toast').stop(true, true).toggleClass('error-toast', error)
+            .text(message).fadeIn(150).delay(2200).fadeOut(250);
     }
 
-    // Custom rule nomor WhatsApp: 10–13 digit angka.
-    $.validator.addMethod(
-        'nomorWhatsApp',
-        function (value, element) {
-            if (this.optional(element)) {
-                return true;
-            }
+    // 6. Aturan khusus nomor WhatsApp.
+    $.validator.addMethod('nomorWhatsApp', function (value, element) {
+        const number = value.replace(/[\s-]/g, '');
+        const digits = number.replace(/\D/g, '').length;
+        return this.optional(element) ||
+            (/^\+?[0-9]+$/.test(number) && digits >= 10 && digits <= 13);
+    }, 'Masukkan nomor WhatsApp yang valid (10–13 digit).');
 
-            const normalized = value.replace(/[\s-]/g, '');
-            const digitCount = normalized.replace(/\D/g, '').length;
-
-            return /^[+0-9]+$/.test(normalized) &&
-                digitCount >= 10 &&
-                digitCount <= 13;
-        },
-        'Masukkan nomor WhatsApp yang valid (10-13 digit).'
-    );
-
-    // VALIDASI FORM menggunakan jQuery Validation Plugin
-    const validator = $('#formPendaftaran').validate({
+    // 7. Validasi form menggunakan jQuery Validation Plugin.
+    const $form = $('#formPendaftaran');
+    $form.validate({
         rules: {
-            nama: {
-                required: true,
-                minlength: 3
-            },
-
-            usia: {
-                required: true,
-                digits: true,
-                min: 15,
-                max: 100
-            },
-
-            email: {
-                required: true,
-                email: true
-            },
-
-            hp: {
-                required: true,
-                nomorWhatsApp: true
-            },
-
-            instansi: {
-                required: true,
-                minlength: 2
-            },
-
-            kategori: {
-                required: true
-            },
-
-            sesi: {
-                required: true
-            },
-
-            alasan: {
-                required: true,
-                minlength: 10,
-                maxlength: 500
-            },
-
-            persetujuan: {
-                required: true
-            }
+            nama: { required: true, minlength: 3 },
+            usia: { required: true, digits: true, min: 15, max: 100 },
+            email: { required: true, email: true },
+            hp: { required: true, nomorWhatsApp: true },
+            instansi: { required: true, minlength: 2 },
+            kategori: { required: true },
+            sesi: { required: true },
+            alasan: { required: true, minlength: 10, maxlength: 500 },
+            persetujuan: { required: true }
         },
-
         messages: {
-            nama: {
-                required: 'Nama lengkap wajib diisi.',
-                minlength: 'Nama minimal 3 karakter.'
-            },
-
-            usia: {
-                required: 'Usia wajib diisi.',
-                digits: 'Usia harus berupa angka bulat.',
-                min: 'Usia peserta minimal 15 tahun.',
-                max: 'Periksa kembali usia yang dimasukkan.'
-            },
-
-            email: {
-                required: 'Alamat email wajib diisi.',
-                email: 'Masukkan format email yang valid.'
-            },
-
-            hp: {
-                required: 'Nomor WhatsApp wajib diisi.'
-            },
-
-            instansi: {
-                required: 'Asal kampus atau instansi wajib diisi.',
-                minlength: 'Isi minimal 2 karakter.'
-            },
-
-            kategori: {
-                required: 'Silakan pilih kategori peserta.'
-            },
-
-            sesi: {
-                required: 'Silakan pilih sesi yang diminati.'
-            },
-
-            alasan: {
-                required: 'Bagian ini wajib diisi.',
-                minlength: 'Tuliskan minimal 10 karakter.',
-                maxlength: 'Jawaban maksimal 500 karakter.'
-            },
-
-            persetujuan: {
-                required: 'Persetujuan wajib dicentang.'
-            }
+            nama: 'Nama wajib diisi, minimal 3 karakter.',
+            usia: 'Usia harus berupa angka antara 15–100.',
+            email: 'Masukkan alamat email yang valid.',
+            hp: 'Masukkan nomor WhatsApp yang valid.',
+            instansi: 'Asal kampus/instansi wajib diisi.',
+            kategori: 'Pilih kategori peserta.',
+            sesi: 'Pilih sesi acara.',
+            alasan: 'Tuliskan alasan 10–500 karakter.',
+            persetujuan: 'Persetujuan wajib dicentang.'
         },
-
         errorElement: 'label',
         errorClass: 'error',
-
-        errorPlacement: function (error, element) {
-            if (element.attr('name') === 'persetujuan') {
-                error.insertAfter(element.closest('.checkbox-label'));
-            } else {
-                error.insertAfter(element);
-            }
-        },
-
         highlight: function (element) {
-            $(element)
-                .addClass('is-error')
-                .removeClass('is-valid');
+            $(element).addClass('is-error').removeClass('is-valid');
         },
-
         unhighlight: function (element) {
-            $(element)
-                .removeClass('is-error')
-                .addClass('is-valid');
+            $(element).removeClass('is-error').addClass('is-valid');
         },
-
         submitHandler: function (form) {
-            const participantName = $('#nama').val().trim();
+            // Mengubah data formulir menjadi objek JSON.
+            const data = Object.fromEntries(new FormData(form).entries());
+            data.persetujuan = $('#persetujuan').is(':checked');
+            const jsonData = JSON.stringify(data, null, 2);
+            console.log('Data pendaftaran dalam JSON:', jsonData);
 
-            $('#successMessage')
-                .stop(true, true)
-                .slideDown(250);
-
-            showToast(
-                'Pendaftaran berhasil divalidasi, ' +
-                participantName + '!',
-                false
-            );
-
-            // Scroll ke pesan sukses
-            $('html, body').stop(true).animate({
-                scrollTop: $('#successMessage').offset().top - 120
-            }, 550);
-
-            // Ini simulasi front-end, bukan penyimpanan database.
+            $('#successMessage').prop('hidden', false).hide().slideDown(200);
+            showToast('Pendaftaran berhasil divalidasi, ' + data.nama + '!');
             form.reset();
-            validator.resetForm();
-
-            $('#formPendaftaran .is-error, #formPendaftaran .is-valid')
-                .removeClass('is-error is-valid');
-
-            return false;
+            $form.validate().resetForm();
+            $form.find('.is-error, .is-valid').removeClass('is-error is-valid');
+            return false; // Simulasi front-end, belum menyimpan ke database.
         }
     });
 
-    // Validasi diperbarui ketika pengguna mengubah isi input.
-    $('#formPendaftaran input, #formPendaftaran select, #formPendaftaran textarea')
-        .on('input change', function () {
-            if ($(this).valid()) {
-                $(this).removeClass('is-error');
-            }
-        });
-
-    // 6. TOMBOL KEMBALI KE ATAS: scroll + fade + animate
-    const $backToTop = $('#backToTop');
-
+    // 8. Tombol kembali ke atas dengan efek fade dan animate.
+    const $top = $('#backToTop');
     $(window).on('scroll', function () {
-        if ($(this).scrollTop() > 400) {
-            $backToTop.stop(true, true).fadeIn(180);
-        } else {
-            $backToTop.stop(true, true).fadeOut(180);
-        }
+        $(this).scrollTop() > 350
+            ? $top.stop(true, true).fadeIn(150)
+            : $top.stop(true, true).fadeOut(150);
     });
-
-    $backToTop.on('click', function () {
-        $('html, body').stop(true).animate({
-            scrollTop: 0
-        }, 550);
+    $top.on('click', function () {
+        $('html, body').stop().animate({ scrollTop: 0 }, 400);
     });
 });
