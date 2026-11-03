@@ -2,202 +2,78 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ferdi Event | Pendaftaran Acara</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portofolio Ferdi</title>
+
+  <!-- Menghubungkan file CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="container nav-inner">
-            <a class="brand" href="#beranda"><span class="brand-mark">F</span>Ferdi<span class="accent">Event</span></a>
-            <button id="navToggle" class="nav-toggle" aria-label="Buka navigasi">☰</button>
-            <ul id="navLinks" class="nav-links">
-                <li><a href="#beranda">Beranda</a></li>
-                <li><a href="#tentang">Tentang</a></li>
-                <li><a href="#detail">Detail</a></li>
-                <li><a class="nav-cta" href="#daftar">Daftar</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <header id="beranda" class="hero">
-        <div class="container hero-grid">
-            <div>
-                <span class="eyebrow">EVENT REGISTRASI 2026</span>
-                <h1>Ide besar dimulai dari <span class="accent">satu pertemuan.</span></h1>
-                <p class="muted">Bergabunglah di Ferdi Creative Fest untuk bertukar ide, belajar hal baru, dan membangun
-                    koneksi bersama komunitas kreatif.</p>
-                <div class="actions">
-                    <a class="button primary" href="#daftar">Daftar sekarang ↗</a>
-                    <a class="button secondary" href="#detail">Lihat detail</a>
-                </div>
-                <div class="event-meta">
-                    <p><b>14 November 2026</b><br><small>Sabtu, 08.00–15.00 WIB</small></p>
-                    <p><b>Aula Kreatif Ferdi</b><br><small>Pontianak, Kalimantan Barat</small></p>
-                </div>
-            </div>
-            <div class="event-art" aria-label="Ilustrasi acara">
-                <span class="art-label">FERDI PRESENTS</span>
-                <strong>CREATIVE<br><span>FEST</span></strong>
-                <p>2026 · CONNECT & GROW</p>
-                <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
-            </div>
-        </div>
-    </header>
+  <!-- ===== Bagian atas ===== -->
+  <header class="header">
+    <h2 class="logo">Ferdi</h2>
+    <button id="tombol-tema">Mode gelap</button>
+  </header>
 
-    <main>
-        <section id="tentang" class="section">
-            <div class="container">
-                <div class="section-heading">
-                    <span class="kicker">KENALI ACARANYA</span>
-                    <h2>Satu acara, banyak <span class="accent">kemungkinan.</span></h2>
-                    <p class="muted">Acara untuk mengembangkan kreativitas, wawasan digital, dan relasi.</p>
-                </div>
-                <div class="feature-grid">
-                    <article class="feature-card"><span class="feature-icon">✦</span>
-                        <h3>Insight Baru</h3>
-                        <p>Dapatkan ide segar dari sesi berbagi yang inspiratif.</p>
-                    </article>
-                    <article class="feature-card"><span class="feature-icon orange">◎</span>
-                        <h3>Bangun Relasi</h3>
-                        <p>Perluas koneksi dengan peserta yang memiliki minat serupa.</p>
-                    </article>
-                    <article class="feature-card"><span class="feature-icon green">↗</span>
-                        <h3>Berani Berkarya</h3>
-                        <p>Bawa pulang ide untuk mulai membuat proyekmu.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
+  <main class="isi">
 
-        <section id="detail" class="section soft">
-            <div class="container split">
-                <div>
-                    <span class="kicker">JADWAL & INFORMASI</span>
-                    <h2>Siapkan dirimu untuk pengalaman yang <span class="accent">berbeda.</span></h2>
-                    <p class="muted">Pilih tab untuk melihat informasi, susunan kegiatan, dan fasilitas.</p>
-                </div>
-                <div class="panel">
-                    <div class="tabs" role="tablist">
-                        <button class="tab active" data-target="#tab-info" aria-selected="true">Informasi</button>
-                        <button class="tab" data-target="#tab-rundown" aria-selected="false">Rundown</button>
-                        <button class="tab" data-target="#tab-fasilitas" aria-selected="false">Fasilitas</button>
-                    </div>
-                    <div class="tab-content">
-                        <div id="tab-info" class="tab-pane">
-                            <h3>Ferdi Creative Fest 2026</h3>
-                            <p class="muted">Ruang untuk belajar, berbagi gagasan, dan berkolaborasi.</p>
-                            <p class="info-row"><span>Tanggal</span><b>14 November 2026</b></p>
-                            <p class="info-row"><span>Waktu</span><b>08.00–15.00 WIB</b></p>
-                            <p class="info-row"><span>Lokasi</span><b>Pontianak</b></p>
-                        </div>
-                        <div id="tab-rundown" class="tab-pane" hidden>
-                            <h3>Susunan Kegiatan</h3>
-                            <p class="info-row"><span>08.00</span><b>Registrasi peserta</b></p>
-                            <p class="info-row"><span>09.00</span><b>Pembukaan & keynote</b></p>
-                            <p class="info-row"><span>10.30</span><b>Workshop kreatif</b></p>
-                            <p class="info-row"><span>13.00</span><b>Networking & penutupan</b></p>
-                        </div>
-                        <div id="tab-fasilitas" class="tab-pane" hidden>
-                            <h3>Fasilitas Peserta</h3>
-                            <ul class="facility-list">
-                                <li>✓ E-sertifikat</li>
-                                <li>✓ Materi digital</li>
-                                <li>✓ Snack dan air mineral</li>
-                                <li>✓ Networking dan tanya jawab</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- ===== Perkenalan ===== -->
+    <section class="perkenalan">
+      <h1>Halo, saya Ferdi.</h1>
+      <p>Mahasiswa Sistem Informasi yang suka membuat aplikasi web.</p>
+    </section>
 
-        <section class="section">
-            <div class="container split faq-layout">
-                <div><span class="kicker">BUTUH INFORMASI?</span>
-                    <h2>Pertanyaan yang <span class="accent">sering diajukan.</span></h2>
-                    <p class="muted">Klik pertanyaan untuk membuka jawabannya.</p>
-                </div>
-                <div class="faq-list">
-                    <button class="faq-question">Apakah harus mendaftar? <span>＋</span></button>
-                    <div class="faq-answer">
-                        <p>Ya, isi formulir di halaman ini untuk simulasi pendaftaran.</p>
-                    </div>
-                    <button class="faq-question">Apakah acara cocok untuk pemula? <span>＋</span></button>
-                    <div class="faq-answer">
-                        <p>Cocok. Peserta dapat belajar dan berdiskusi dari berbagai tingkat pengalaman.</p>
-                    </div>
-                    <button class="faq-question">Apakah data tersimpan? <span>＋</span></button>
-                    <div class="faq-answer">
-                        <p>Belum. Ini simulasi front-end; penyimpanan permanen memerlukan backend atau database.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- ===== Daftar proyek ===== -->
+    <h2>Proyek saya</h2>
 
-        <section id="daftar" class="section soft">
-            <div class="container split">
-                <div><span class="kicker">JADI BAGIAN DARI ACARA</span>
-                    <h2>Daftar <span class="accent">sekarang!</span></h2>
-                    <p class="muted">Isi data dengan benar. Semua kolom bertanda bintang wajib diisi.</p>
-                </div>
-                <div class="panel">
-                    <h3>Formulir Peserta</h3>
-                    <form id="formPendaftaran" novalidate>
-                        <div class="form-row">
-                            <div class="form-group"><label for="nama">Nama lengkap *</label><input id="nama" name="nama"
-                                    placeholder="Nama lengkap"></div>
-                            <div class="form-group"><label for="usia">Usia *</label><input id="usia" name="usia"
-                                    type="number" placeholder="Contoh: 20"></div>
-                        </div>
-                        <div class="form-group"><label for="email">Email *</label><input id="email" name="email"
-                                type="email" placeholder="nama@email.com"></div>
-                        <div class="form-group"><label for="hp">Nomor WhatsApp *</label><input id="hp" name="hp"
-                                placeholder="081234567890"><small class="hint">10–13 digit angka.</small></div>
-                        <div class="form-group"><label for="instansi">Kampus / instansi *</label><input id="instansi"
-                                name="instansi" placeholder="Nama kampus atau instansi"></div>
-                        <div class="form-row">
-                            <div class="form-group"><label for="kategori">Kategori *</label><select id="kategori"
-                                    name="kategori">
-                                    <option value="">Pilih kategori</option>
-                                    <option>Mahasiswa</option>
-                                    <option>Pelajar</option>
-                                    <option>Umum</option>
-                                    <option>Profesional</option>
-                                </select></div>
-                            <div class="form-group"><label for="sesi">Pilihan sesi *</label><select id="sesi"
-                                    name="sesi">
-                                    <option value="">Pilih sesi</option>
-                                    <option>Workshop Kreativitas</option>
-                                    <option>Digital & Teknologi</option>
-                                    <option>Networking</option>
-                                </select></div>
-                        </div>
-                        <div class="form-group"><label for="alasan">Apa yang ingin didapatkan? *</label><textarea
-                                id="alasan" name="alasan" rows="3" placeholder="Ceritakan singkat..."></textarea></div>
-                        <label class="checkbox-label"><input type="checkbox" id="persetujuan" name="persetujuan"> Saya
-                            memastikan data yang diisi benar. *</label>
-                        <button class="button primary submit-button" type="submit">Kirim pendaftaran ↗</button>
-                        <p class="hint">Demo front-end; data tidak disimpan ke database.</p>
-                    </form>
-                    <div id="successMessage" class="success-message" hidden>✓ Pendaftaran berhasil divalidasi. Terima
-                        kasih!</div>
-                </div>
-            </div>
-        </section>
-    </main>
+    <!-- Kotak pencarian (dipakai oleh script.js) -->
+    <input type="text" id="cari" placeholder="Cari proyek...">
 
-    <footer class="footer">
-        <div class="container footer-inner"><b>Ferdi Event</b><span>© 2026 · Praktikum Pemrograman Web Dasar</span><a
-                href="#beranda">Kembali ke atas ↑</a></div>
-    </footer>
-    <button id="backToTop" aria-label="Kembali ke atas">↑</button>
-    <div id="toast" role="status"></div>
-    <script src="script.js"></script>
+
+    <section class="daftar-proyek">
+
+      <a class="kartu" href="buku-tamu-digital/index.html">
+        <h3>Buku Tamu Digital</h3>
+        <p>Formulir pencatatan tamu kantor.</p>
+      </a>
+
+      <a class="kartu" href="mav-platform/index.html">
+        <h3>MAV Platform</h3>
+        <p>Menu berbeda untuk setiap peran pengguna.</p>
+      </a>
+
+      <a class="kartu" href="Challenge Praktikum 12/proal_berita.html">
+        <h3>Challenge Praktikum 12</h3>
+        <p>Kumpulan tugas challenge praktikum.</p>
+      </a>
+
+      <a class="kartu" href="Tugas Mandiri 11/index.html">
+        <h3>Tugas Mandiri 11</h3>
+        <p>Proyek tugas mandiri praktikum.</p>
+      </a>
+
+      <a class="kartu" href="Pertemuan 11/webKopi.html">
+        <h3>Pertemuan 11</h3>
+        <p>Hasil latihan dan materi pertemuan 11.</p>
+      </a>
+
+      <a class="kartu" href="Profile Sederhana/index.html">
+        <h3>Profile Sederhana</h3>
+        <p>Website profil sederhana.</p>
+      </a>
+
+    </section>
+
+    <!-- Mau menambah proyek? Salin satu blok <a class="kartu"> di atas, 
+lalu ubah href, judul, dan deskripsinya. -->
+    </section>
+    <p id="pesan-kosong" class="pesan-kosong">Proyek tidak ditemukan.</p>
+  </main>
+  <!-- Menghubungkan file JavaScript (letakkan paling bawah) -->
+  <script src="script.js"></script>
 </body>
 
 </html>
