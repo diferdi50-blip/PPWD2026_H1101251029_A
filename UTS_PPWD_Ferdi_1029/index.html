@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Sistem Hitung Cicilan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: #1f6f54;
+            color: white;
+            padding: 16px 5%;
+            text-align: center;
+        }
+
+        main {
+            max-width: 600px;
+            margin: 16px auto;
+            padding: 16px;
+            background: white;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin: 4px 0 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 8px 16px;
+            background: #1f6f54;
+            color: white;
+            border: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        th,
+        td {
+            border: 1px solid;
+            padding: 6px;
+            text-align: right;
+        }
+
+        @media (max-width: 500px) {
+            main {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Sistem Hitung Cicilan</h1>
+        <p>NIM: H1101251029 | Nama: Ferdi</p>
+    </header>
+
+    <main>
+        <label>Harga (Rp) <input type="number" id="harga"></label>
+        <label>DP (Rp) <input type="number" id="uangMuka"></label>
+        <label>Tenor (bulan) <input type="number" id="tenor"></label>
+        <label>Bunga flat (% per tahun) <input type="number" id="bunga"></label>
+        <button id="tombol">Hitung</button>
+
+        <p id="hasil"></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Bulan</th>
+                    <th>Cicilan</th>
+                    <th>Sisa</th>
+                </tr>
+            </thead>
+            <tbody id="tabel"></tbody>
+        </table>
+    </main>
+
+    <script>
+        const formatRupiah = angka => "Rp " + Math.round(angka).toLocaleString("id-ID");
+
+        document.getElementById("tombol").addEventListener("click", function () {
+            const harga = +document.getElementById("harga").value;
+            const uangMuka = +document.getElementById("uangMuka").value;
+            const tenor = +document.getElementById("tenor").value;
+            const bunga = +document.getElementById("bunga").value;
+            const hasil = document.getElementById("hasil");
+
+            if (harga <= 0 || uangMuka < 0 || uangMuka >= harga || tenor <= 0 || bunga < 0) {
+                hasil.textContent = "Input tidak valid.";
+                return;
+            }
+
+            const pokok = harga - uangMuka;
+            const total = pokok + pokok * (bunga / 100) * (tenor / 12);
+            const cicilan = total / tenor;
+            hasil.textContent = "Cicilan/bulan: " + formatRupiah(cicilan) + " | Total bayar: " + formatRupiah(total);
+
+            let isi = "";
+            for (let bulan = 1; bulan <= tenor; bulan++) {
+                isi += `<tr><td>${bulan}</td><td>${formatRupiah(cicilan)}</td><td>${formatRupiah(Math.max(total - cicilan * bulan, 0))}</td></tr>`;
+            }
+            document.getElementById("tabel").innerHTML = isi;
+        });
+    </script>
+</body>
+
+</html>
