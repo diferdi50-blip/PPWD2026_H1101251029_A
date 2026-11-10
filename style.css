@@ -62,6 +62,12 @@ body::after {
     z-index: -1;
     background: rgba(243, 230, 208, 0.72);
     pointer-events: none;
+    transition: background 0.4s ease;
+}
+
+/* Background saat mode gelap */
+body.gelap::after {
+    background: rgba(18, 15, 14, 0.82);
 }
 
 /* 3. Header */
