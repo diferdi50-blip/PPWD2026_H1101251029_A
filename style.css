@@ -1,23 +1,28 @@
-/* ===== 1. Warna ===== 
-Variabel CSS: ubah warna cukup di sini saja. */
+/* =================================
+   GAARA THEME - PORTFOLIO FERDI
+================================= */
+
+/* 1. Warna utama */
 :root {
-    --latar: #eef3f1;
-    --kartu: #ffffff;
-    --teks: #1c2b27;
-    --teks-pudar: #5f726c;
-    --aksen: #0f766e;
+    --latar: #f3e6d0;
+    --kartu: #fffaf1;
+    --teks: #442d27;
+    --teks-pudar: #806b5c;
+    --aksen: #a84232;
+    --border: #dfc5a6;
 }
 
-/* Saat body diberi class "gelap" oleh JavaScript, warna berganti */
+/* Mode gelap */
 body.gelap {
-    --latar: #121a18;
-    --kartu: #1b2623;
-    --teks: #e6efec;
-    --teks-pudar: #94a8a1;
-    --aksen: #5fd1c4;
+    --latar: #211d1b;
+    --kartu: #352923;
+    --teks: #f5e8d5;
+    --teks-pudar: #c6aa91;
+    --aksen: #e07856;
+    --border: #594237;
 }
 
-/* ===== 2. Dasar halaman ===== */
+/* 2. Pengaturan dasar */
 * {
     box-sizing: border-box;
 }
@@ -28,88 +33,175 @@ body {
     line-height: 1.6;
     background: var(--latar);
     color: var(--teks);
+    transition: color 0.3s;
+    position: relative;
+    isolation: isolate;
 }
 
-/* ===== 3. Bagian atas ===== */
+/* Background seluruh halaman */
+body::before {
+    content: "";
+    position: fixed;
+    inset: -10px;
+    z-index: -2;
+
+    background-image: url("Aset/Jinnchuruki.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: blur(3px);
+    transform: scale(1.02);
+}
+
+/* Lapisan transparan agar konten mudah dibaca */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(243, 230, 208, 0.72);
+    pointer-events: none;
+}
+
+/* 3. Header */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 24px;
+    padding: 20px 5%;
 }
 
 .logo {
     margin: 0;
     color: var(--aksen);
+    font-size: 1.8rem;
+    letter-spacing: 1px;
 }
 
 #tombol-tema {
-    padding: 8px 16px;
+    padding: 10px 20px;
     border: 2px solid var(--aksen);
-    border-radius: 20px;
+    border-radius: 25px;
     background: transparent;
     color: var(--aksen);
     cursor: pointer;
+    transition: 0.3s;
 }
 
-/* ===== 4. Isi halaman ===== */
+#tombol-tema:hover {
+    background: var(--aksen);
+    color: white;
+}
+
+/* 4. Isi halaman */
 .isi {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 0 24px 60px;
 }
 
+/* 5. Hero / Perkenalan */
 .perkenalan {
-    padding: 50px 0 20px;
+    min-height: 390px;
+    display: flex;
+    align-items: center;
+    padding: 45px;
+    margin-top: 30px;
+    border-radius: 22px;
+    overflow: hidden;
+
+    background:
+        linear-gradient(90deg,
+            rgba(38, 24, 20, 0.92),
+            rgba(38, 24, 20, 0.25)),
+        url("Aset/biju.jpg");
+
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.subjudul {
+    color: #e8a16c;
+    font-weight: bold;
+    letter-spacing: 4px;
+    font-size: 0.85rem;
 }
 
 .perkenalan h1 {
-    font-size: 2.6rem;
-    margin: 0 0 8px;
+    color: white;
+    font-size: 3rem;
+    margin: 8px 0;
 }
 
 .perkenalan p {
-    color: var(--teks-pudar);
+    color: #f5e8d5;
     font-size: 1.1rem;
-    margin: 0;
 }
 
-/* ===== 5. Pencarian ===== */
-#cari {
-    width: 100%;
-    padding: 12px 16px;
-    margin: 8px 0 20px;
-    border: 1px solid var(--teks-pudar);
-    border-radius: 10px;
-    font-size: 1rem;
-    background: var(--kartu);
+.hero-tag {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 16px;
+    border: 1px solid #e8a16c;
+    border-radius: 20px;
+    color: #f5d0a5;
+    font-size: 0.9rem;
+}
+
+/* 6. Judul proyek */
+.isi>h2 {
+    margin-top: 45px;
     color: var(--teks);
 }
 
-/* ===== 6. Kartu proyek ===== */
-.daftar-proyek {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+/* 7. Pencarian */
+#cari {
+    width: 100%;
+    padding: 14px 18px;
+    margin: 8px 0 25px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: var(--kartu);
+    color: var(--teks);
+    outline-color: var(--aksen);
 }
 
+/* 8. Daftar proyek */
+.daftar-proyek {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,
+            minmax(250px, 1fr));
+    gap: 22px;
+}
+
+/* 9. Kartu proyek */
 .kartu {
     display: block;
-    padding: 24px;
+    padding: 25px;
     background: var(--kartu);
-    border-radius: 14px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 5px 16px rgba(80, 45, 25, 0.08);
     color: inherit;
     text-decoration: none;
-    transition: transform 0.2s;
+    transition: 0.3s ease;
 }
 
 .kartu:hover {
-    transform: translateY(-4px);
+    transform: translateY(-7px);
+    box-shadow: 0 12px 25px rgba(120, 65, 35, 0.18);
+    border-color: var(--aksen);
 }
 
 .kartu h3 {
-    margin: 0 0 6px;
+    margin: 0 0 8px;
     color: var(--aksen);
 }
 
@@ -118,8 +210,37 @@ body {
     color: var(--teks-pudar);
 }
 
-/* Pesan "tidak ditemukan" disembunyikan dulu */
+/* 10. Pesan pencarian */
 .pesan-kosong {
     display: none;
     color: var(--teks-pudar);
+}
+
+/* 11. Tampilan HP */
+@media (max-width: 600px) {
+    .header {
+        padding: 16px;
+    }
+
+    .isi {
+        padding: 0 16px 40px;
+    }
+
+    .perkenalan {
+        min-height: 320px;
+        padding: 25px;
+        background-position: center;
+    }
+
+    .perkenalan h1 {
+        font-size: 2rem;
+    }
+
+    .perkenalan p {
+        font-size: 1rem;
+    }
+
+    .daftar-proyek {
+        grid-template-columns: 1fr;
+    }
 }
