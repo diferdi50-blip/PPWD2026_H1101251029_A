@@ -1,0 +1,23 @@
+/* css/style.css: dimuat SETELAH bootstrap.min.css */
+
+body {
+    background-color: #f4f6f9;
+    /* latar halaman abu muda */
+}
+
+/* Card statistik: sudut membulat + efek hover */
+.stat-card {
+    border: 0;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Sidebar setinggi layar (dikurangi tinggi navbar +/- 56px) */
+.sidebar {
+    min-height: calc(100vh - 56px);
+}
